@@ -18,7 +18,7 @@ struct ContentView: View {
             .background(Color.black)
             .cornerRadius(6)
             .onTapGesture {
-              //  APAlert.shared.startloader(title: "Alert Title", message: "Please Follow me on github and instagram", buttonTitle: "OK")
+                APAlertView.shared.startloader(title: "Alert Title", message: "Please Follow me on github and instagram", buttonTitle: "OK")
             }
     }
 }
