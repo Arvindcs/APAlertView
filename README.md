@@ -11,7 +11,7 @@ APAlertView is written in SwiftUI.
 
 Screenshots
 ---------
-![SSToastMessage Screenshots](screenshot.png)
+<img src="https://github.com/Arvindcs/APAlertView/blob/main/images/screenshot.png"></a>
 
 
 Setup Instructions
