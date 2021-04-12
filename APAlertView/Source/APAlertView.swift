@@ -2,19 +2,23 @@
 import Foundation
 import SwiftUI
 
+
 @available(iOS 13.0, *)
 private struct AlertView: View {
     
-    let alertBackgroundColor: Color = .white
-    let alertTextColor: Color = .black
-    let alertCornerRadius: CGFloat =  20.0
-    
+    //MARK: Binding
     @Binding var isShowing: Bool
-    
+   
+    //MARK: variables for view
     let titleText: String
     let messageText: String
     let buttonText: String
+    let alertBackgroundColor: Color
+    let alertTextColor: Color
+    let alerteButtonTextColor: Color
+    let alertButtonBackgroundColor: Color
     
+    //MARK: body
     var body: some View {
         
         ZStack(alignment: .center) {
@@ -32,20 +36,20 @@ private struct AlertView: View {
                     .lineLimit(3)
                     .multilineTextAlignment(.center)
                     .font(.system(size: 14))
-                    .foregroundColor(.black)
+                    .foregroundColor(alertTextColor)
                     .padding(.bottom , 20)
                 
                 Button(action: {
-                    APAlertView.shared.remove()
+                    APAlertView.shared.removeAlert()
                 }) {
                     Text(buttonText)
                         .font(.system(size: 14))
-                        .foregroundColor(.white)
+                        .foregroundColor(alerteButtonTextColor)
                         .fontWeight(.bold)
                 }
                 .frame(width: 130, height: 40)
-                .background(Color.black)
-                .cornerRadius(alertCornerRadius)
+                .background(alertButtonBackgroundColor)
+                .cornerRadius(20)
             }
             .padding(EdgeInsets(top: 40, leading: 20, bottom: 30, trailing: 20))
             .frame(width: 300)
@@ -62,41 +66,39 @@ public class APAlertView {
     private init() { }
     private var popupWindow: AlertWindow?
     
-    public func showAlertView(title: String = "", message: String = "", buttonTitle: String = "") {
-        setAlertBody(title: title, message: message, buttonTitle: buttonTitle)
-    }
-    
-    public func remove() {
-        removeAlert()
-    }
-    
-}
-
-// MARK: - AlertWindow
-
-private class AlertWindow: UIWindow {
-}
-
-@available(iOS 13.0, *)
-private extension APAlertView {
-    
-    func setAlertBody(title: String = "", message: String = "", buttonTitle: String = "") {
+    func showAlertView(with title: String = "",
+                       message: String = "",
+                       buttonTitle: String = "",
+                       alertBackgroundColor: Color = .white,
+                       alertTextColor: Color = .black,
+                       alertButtonTextColor: Color = .white,
+                       alertButtonBackgroundColor: Color = .black) {
         
         let windowScene = UIApplication.shared
             .connectedScenes
             .filter { $0.activationState == .foregroundActive }
             .first
         
+        let alertView = AlertView(isShowing:  .constant(true),
+                                  titleText: title,
+                                  messageText: message,
+                                  buttonText: buttonTitle,
+                                  alertBackgroundColor: alertBackgroundColor,
+                                  alertTextColor: alertTextColor,
+                                  alerteButtonTextColor: alertButtonTextColor,
+                                  alertButtonBackgroundColor: alertButtonBackgroundColor)
+            
+        
         if let windowScene = windowScene as? UIWindowScene {
             popupWindow = AlertWindow(windowScene: windowScene)
             popupWindow?.frame = UIScreen.main.bounds
             popupWindow?.backgroundColor = .clear
-            popupWindow?.rootViewController = UIHostingController(rootView: AlertView(isShowing: .constant(true), titleText: title, messageText: message, buttonText: buttonTitle))
-            popupWindow?.rootViewController?.view.backgroundColor = UIColor.gray.withAlphaComponent(0.6) //.opacity(0.5)
+            popupWindow?.rootViewController = UIHostingController(rootView: alertView)
+            popupWindow?.rootViewController?.view.backgroundColor = UIColor.gray.withAlphaComponent(0.6)
             popupWindow?.makeKeyAndVisible()
         }
     }
-
+    
     func removeAlert() {
         let alertwindows = UIApplication.shared.windows.filter { $0 is AlertWindow }
         alertwindows.forEach { (window) in
@@ -104,4 +106,8 @@ private extension APAlertView {
         }
         popupWindow = nil
     }
+}
+
+// MARK: - AlertWindow
+private class AlertWindow: UIWindow {
 }
