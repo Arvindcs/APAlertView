@@ -2,7 +2,8 @@
 import Foundation
 import SwiftUI
 
-@available(OSX 10.15, *)
+
+@available(iOS 13.0, *)
 private struct AlertView: View {
     
     let loaderBackgroundColor: Color = .secondary
@@ -37,7 +38,7 @@ private struct AlertView: View {
                 Spacer()
                 
                 Button(action: {
-                    APAlert.shared.remove()
+                    APAlertView.shared.remove()
                 }) {
                     Text(buttonText)
                         .font(.system(size: 14))
@@ -57,8 +58,9 @@ private struct AlertView: View {
     }
 }
 
-public class APAlert {
-    public static var shared = APAlert()
+@available(iOS 13.0, *)
+public class APAlertView {
+    public static var shared = APAlertView()
     private init() { }
     private var popupWindow: AlertWindow?
     
@@ -78,7 +80,8 @@ public class APAlert {
 private class AlertWindow: UIWindow {
 }
 
-private extension APAlert {
+@available(iOS 13.0, *)
+private extension APAlertView {
     
     func setAlertBody(title: String = "", message: String = "", buttonTitle: String = "") {
         

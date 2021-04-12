@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 13.0, *)
 struct ContentView: View {
     var body: some View {
         
@@ -17,11 +18,11 @@ struct ContentView: View {
             .background(Color.black)
             .cornerRadius(6)
             .onTapGesture {
-                APAlert.shared.startloader(title: "Alert Title", message: "Please Follow me on github and instagram", buttonTitle: "OK")
+              //  APAlert.shared.startloader(title: "Alert Title", message: "Please Follow me on github and instagram", buttonTitle: "OK")
             }
     }
 }
-
+@available(iOS 13.0, *)
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
