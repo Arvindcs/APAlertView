@@ -7,7 +7,7 @@ APAlertView
 [![InstaGram](https://img.shields.io/badge/Instagram-CodewithArvind-brightgreen)](https://www.instagram.com/codewitharvind)
 
 
-APAlertView is written in SwiftUI.
+APAlertView is written in SwiftUI. You can show a alertview only writing a signle line of code. it pretty straight forward and you want need to write repatative code for all views.
 
 Screenshots
 ---------
@@ -39,6 +39,7 @@ Drag `APAlertView.swift` to your project.
 Basic Examples
 ---------
 ```swift
+
 struct ContentView: View {
     
     let alertTitle   = "Alert Title"
