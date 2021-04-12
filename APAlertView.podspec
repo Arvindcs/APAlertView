@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { 'Arvind Patel' => 'arvindpatelcs@gmail.com' }
   s.platform     = :ios
-  s.source       = { :git => "https://github.com/Arvindcs/APAlertView.git", :tag => "1.0.0" }
+  s.source       = { :git => "https://github.com/Arvindcs/APAlertView.git", :tag => "main" }
   s.source_files  = 'APAlertView', 'APAlertView/**/*.swift'
   s.ios.deployment_target = "11.0"
   s.swift_version = "5.0"
