@@ -2,14 +2,13 @@
 import Foundation
 import SwiftUI
 
-
 @available(iOS 13.0, *)
 private struct AlertView: View {
     
-    let loaderBackgroundColor: Color = .secondary
-    let loaderCornerRadius: CGFloat =  10.0
+    let alertBackgroundColor: Color = .white
+    let alertTextColor: Color = .black
+    let alertCornerRadius: CGFloat =  20.0
     
-    /// parameter to hide and show loader
     @Binding var isShowing: Bool
     
     let titleText: String
@@ -24,18 +23,17 @@ private struct AlertView: View {
                 
                 if titleText.count > 0 {
                     Text(titleText)
-                        .foregroundColor(.black)
+                        .foregroundColor(alertTextColor)
                         .fontWeight(.bold)
                         .padding(.bottom, 5)
                 }
                 
                 Text(messageText)
+                    .lineLimit(3)
                     .multilineTextAlignment(.center)
-                    .frame(height: 50)
                     .font(.system(size: 14))
-                    .foregroundColor(.gray)
-                
-                Spacer()
+                    .foregroundColor(.black)
+                    .padding(.bottom , 20)
                 
                 Button(action: {
                     APAlertView.shared.remove()
@@ -47,11 +45,11 @@ private struct AlertView: View {
                 }
                 .frame(width: 130, height: 40)
                 .background(Color.black)
-                .cornerRadius(20.0)
+                .cornerRadius(alertCornerRadius)
             }
             .padding(EdgeInsets(top: 40, leading: 20, bottom: 30, trailing: 20))
-            .frame(width: 300, height: 200)
-            .background(Color.white)
+            .frame(width: 300)
+            .background(alertBackgroundColor)
             .cornerRadius(10.0)
             .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
         }
@@ -64,11 +62,10 @@ public class APAlertView {
     private init() { }
     private var popupWindow: AlertWindow?
     
-    public func startloader(title: String = "", message: String = "", buttonTitle: String = "") {
+    public func showAlertView(title: String = "", message: String = "", buttonTitle: String = "") {
         setAlertBody(title: title, message: message, buttonTitle: buttonTitle)
     }
     
-    /// function to remove loader from screen.
     public func remove() {
         removeAlert()
     }
@@ -99,7 +96,7 @@ private extension APAlertView {
             popupWindow?.makeKeyAndVisible()
         }
     }
-    /// Remove loader from screen
+
     func removeAlert() {
         let alertwindows = UIApplication.shared.windows.filter { $0 is AlertWindow }
         alertwindows.forEach { (window) in
