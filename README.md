@@ -14,6 +14,10 @@ Screenshots
 <img src="https://github.com/Arvindcs/APAlertView/blob/main/images/screenshot.png"></a>
 
 
+#### If you like the project, don't forget to `put star 🌟`.
+
+</a>&nbsp;&nbsp;&nbsp;<a href="https://paypal.me/arvindp07" target="_blank"><img src="https://img.shields.io/badge/Donate-informational?style=for-the-badge&logo=paypal&logoColor=white" ></a>
+
 Setup Instructions
 ------------------
 [CocoaPods](http://cocoapods.org)
