@@ -1,3 +1,9 @@
+//
+//  ContentView.swift
+//  APAlertView
+//
+//  Created by Arvind on 12/04/21.
+//
 
 import Foundation
 import SwiftUI
@@ -8,6 +14,7 @@ private struct AlertView: View {
     
     //MARK: Binding
     @Binding var isShowing: Bool
+    @State var opacity: Double = 0
    
     //MARK: variables for view
     let titleText: String
@@ -46,6 +53,7 @@ private struct AlertView: View {
                         .font(.system(size: 14))
                         .foregroundColor(alerteButtonTextColor)
                         .fontWeight(.bold)
+                        .frame(width: 130, height: 40)
                 }
                 .frame(width: 130, height: 40)
                 .background(alertButtonBackgroundColor)
@@ -56,6 +64,14 @@ private struct AlertView: View {
             .background(alertBackgroundColor)
             .cornerRadius(10.0)
             .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
+        }
+        .opacity(opacity)
+        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .center)
+        .background(Color(UIColor.gray.withAlphaComponent(0.6)))
+        .animation(Animation.linear(duration: 0.6))
+        .onAppear() { withAnimation {
+            opacity = 1
+          }
         }
     }
 }
@@ -101,10 +117,17 @@ public class APAlertView {
     
     func removeAlert() {
         let alertwindows = UIApplication.shared.windows.filter { $0 is AlertWindow }
-        alertwindows.forEach { (window) in
-            window.removeFromSuperview()
+        
+        UIView.animate(withDuration: 0.6, delay: 0, options: .curveEaseInOut) {
+            alertwindows.forEach { (window) in
+                window.alpha = 0
+            }
+        } completion: { (complete) in
+            alertwindows.forEach { (window) in
+                window.removeFromSuperview()
+            }
+            self.popupWindow = nil
         }
-        popupWindow = nil
     }
 }
 

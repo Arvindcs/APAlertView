@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    let alertTitle   = "Alert Title"
+    let alertTitle   = "Something Went Wrong"
     let alertMessage = "Request could not be processed due to a server error. The request may succeed if you try again."
     
     var body: some View {
@@ -27,3 +27,5 @@ struct ContentView: View {
         }
     }
 }
+//MARK :- Example
+//APAlertView.shared.showAlertView(with: alertTitle, message: alertMessage, buttonTitle: "OK", alertBackgroundColor: .blue, alertTextColor: .white, alertButtonTextColor: .blue, alertButtonBackgroundColor: .white)
