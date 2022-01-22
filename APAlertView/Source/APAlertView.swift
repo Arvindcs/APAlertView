@@ -66,8 +66,8 @@ private struct AlertView: View {
             .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
         }
         .opacity(opacity)
-        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .center)
-        .background(Color(UIColor.gray.withAlphaComponent(0.6)))
+        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 20, alignment: .center)
+        .background(Color(UIColor.gray.withAlphaComponent(0.5)).opacity(opacity))
         .animation(Animation.linear(duration: 0.6))
         .onAppear() { withAnimation {
             opacity = 1
@@ -110,7 +110,7 @@ public class APAlertView {
             popupWindow?.frame = UIScreen.main.bounds
             popupWindow?.backgroundColor = .clear
             popupWindow?.rootViewController = UIHostingController(rootView: alertView)
-            popupWindow?.rootViewController?.view.backgroundColor = UIColor.gray.withAlphaComponent(0.6)
+            popupWindow?.rootViewController?.view.backgroundColor = .clear
             popupWindow?.makeKeyAndVisible()
         }
     }
