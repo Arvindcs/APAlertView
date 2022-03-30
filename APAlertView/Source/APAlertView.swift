@@ -11,34 +11,34 @@ public class APAlertView: ObservableObject {
     
     public enum AlertType {
         case defaults
-        case custom
+        case twoButton
     }
     
     // MARK: Published
-    @Published public var showAlert : Bool = false
+    @Published public var showAlertView : Bool = false
     
     // MARK: Properties
     private var alertType : AlertType = AlertType.defaults
-    private var alertTitle : String = "Alert"
-    private var alertMessage : String = "APAlertView is awesome"
+    private var title : String = ""
+    private var message : String = ""
     
-    private var defaultButtonTitle: String = "Dismiss"
+    private var defaultButtonTitle: String = "OK"
     private var defaultButtonCompletionHandler: () -> () = {}
     
-    private var secondButtonTitle: String = "Ok"
+    private var secondButtonTitle: String = ""
     private var secondCompletionHandler: () -> () = {}
     
     //MARK:- Default Alert View
-    public func showAlertWith(title: String,
-                              message: String,
-                              buttonTitle: String,
-                              defaultCompletionHandler: @escaping () -> ()) {
+    public func showAlertViewWith(title: String = "",
+                                  message: String = "",
+                                  buttonTitle: String,
+                                  defaultCompletionHandler: @escaping () -> ()) {
         self.alertType = .defaults
-        self.alertTitle = title
-        self.alertMessage = message
+        self.title = title
+        self.message = message
         self.defaultButtonTitle = buttonTitle
         self.defaultButtonCompletionHandler = defaultCompletionHandler
-        showAlert = true
+        showAlertView = true
     }
     
     // MARK: A representation for an alert presentation.
@@ -48,30 +48,29 @@ public class APAlertView: ObservableObject {
             self.defaultButtonCompletionHandler()
         }
         
-        return Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: defaultButton)
+        return Alert(title: Text(title), message: Text(message), dismissButton: defaultButton)
     }
-    
-    //MARK:- Custom Alert View
-    public func showCustomAlertWith(title: String,
-                                    message: String,
-                                    defaultButtonTitle: String,
-                                    secondButtonTitle: String,
-                                    defaultCompletionHandler: @escaping () -> (),
-                                    secondCompletionHandler: @escaping () -> ()) {
-        self.alertType = .custom
-        self.alertTitle = title
-        self.alertMessage = message
+    //MARK:- Alert View with Two Button
+    public func showAlertWithTwoButton(title: String = "",
+                                       message: String = "",
+                                       firstButtonTitle: String,
+                                       secondButtonTitle: String,
+                                       firstCompletionHandler: @escaping () -> (),
+                                       secondCompletionHandler: @escaping () -> ()) {
+        self.alertType = .twoButton
+        self.title = title
+        self.message = message
+        
+        self.defaultButtonTitle = firstButtonTitle
+        self.defaultButtonCompletionHandler = firstCompletionHandler
         
         self.secondButtonTitle = secondButtonTitle
         self.secondCompletionHandler = secondCompletionHandler
         
-        self.defaultButtonTitle = defaultButtonTitle
-        self.defaultButtonCompletionHandler = defaultCompletionHandler
-        
-        showAlert = true
+        showAlertView = true
     }
     
-    private var getStandardChoiceAlert: Alert {
+    private var getTwoButtonAlert: Alert {
         let primaryButton = Alert.Button.default(Text(defaultButtonTitle)) {
             self.defaultButtonCompletionHandler()
         }
@@ -80,8 +79,8 @@ public class APAlertView: ObservableObject {
             self.secondCompletionHandler()
         }
         
-        return Alert(title: Text(alertTitle),
-                     message: Text(alertMessage),
+        return Alert(title: Text(title),
+                     message: Text(message),
                      primaryButton: primaryButton,
                      secondaryButton: secondaryButton
         )
@@ -92,8 +91,8 @@ public class APAlertView: ObservableObject {
         switch alertType {
         case .defaults:
             return getDefaultAlert
-        case .custom:
-            return getStandardChoiceAlert
+        case .twoButton:
+            return getTwoButtonAlert
         }
     }
 }
@@ -104,7 +103,7 @@ public struct AlertViewModifier: ViewModifier {
     
     public func body(content: Content) -> some View {
         content
-            .alert(isPresented: $alert.showAlert) {
+            .alert(isPresented: $alert.showAlertView) {
                 alert.getCurrentAlert()
             }
     }
@@ -112,7 +111,7 @@ public struct AlertViewModifier: ViewModifier {
 
 extension View {
     
-    public func uses(_ alertManager: APAlertView) -> some View {
+    public func usesAlert(_ alertManager: APAlertView) -> some View {
         self.modifier(AlertViewModifier(alert: alertManager))
     }
 }
