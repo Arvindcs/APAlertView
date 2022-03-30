@@ -55,7 +55,7 @@ struct ContentView: View {
                     debugPrint("Submit Button Pressed")
                 }
             }
-        }.uses(alertView)  //STEP:- 2
+        }.usesAlert(alertView)  //STEP:- 2
     }
 }
 
