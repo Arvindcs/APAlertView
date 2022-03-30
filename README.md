@@ -11,7 +11,7 @@ APAlertView is written in SwiftUI. You can show a alertview only writing a signl
 
 Screenshots
 ---------
-<img src="https://github.com/Arvindcs/APAlertView/blob/main/images/screenshot.png"></a>
+<img src="https://github.com/Arvindcs/APAlertView/blob/main/images/screenshot.png" width="475" height="475"/>
 
 
 #### If you like the project, don't forget to `put star 🌟`.
@@ -40,26 +40,26 @@ Basic Examples
 ---------
 ```swift
 
+import SwiftUI
+
 struct ContentView: View {
     
-    let alertTitle   = "Alert Title"
-    let alertMessage = "Request could not be processed due to a server error. The request may succeed if you try again."
-    
+    //STEP:- 1
+    @StateObject var alertView = APAlertView()
+
     var body: some View {
-        
-        VStack(spacing: 20) {
-            Text("Show Alert")
-                .frame(width: 200, height: 40)
-                .foregroundColor(.white)
-                .background(Color.black)
-                .cornerRadius(6)
-                .onTapGesture {
-                    APAlertView.shared.showAlertView(with: alertTitle, message: alertMessage, buttonTitle: "OK")
+        VStack(spacing: 30) {
+            Button("Show Default Alert") {
+                //STEP:- 3
+                alertView.showAlertWith(title: "Alert", message: "This is APAlertView", buttonTitle: "Ok") {
+                    debugPrint("Submit Button Pressed")
                 }
-            
-        }
+            }
+        }.uses(alertView)  //STEP:- 2
     }
 }
+
+
 ```
 
 ## 📃 License
