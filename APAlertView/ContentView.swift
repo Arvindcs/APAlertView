@@ -9,23 +9,34 @@ import SwiftUI
 
 struct ContentView: View {
     
-    let alertTitle   = "Something Went Wrong"
-    let alertMessage = "Request could not be processed due to a server error. The request may succeed if you try again."
+    @StateObject var alertView = APAlertView()
     
     var body: some View {
         
-        VStack(spacing: 20) {
-            Text("Show Alert")
-                .frame(width: 200, height: 40)
-                .foregroundColor(.white)
-                .background(Color.black)
-                .cornerRadius(6)
-                .onTapGesture {
-                    APAlertView.shared.showAlertView(with: alertTitle, message: alertMessage, buttonTitle: "OK")
-                }
+        VStack(spacing: 30) {
             
-        }
+            Button("Show Default Alert") {
+                alertView.showAlertWith(title: "Alert", message: "This is APAlertView", buttonTitle: "Ok") {
+                    debugPrint("Submit Button Pressed")
+                }
+            }
+            .padding(.init(top: 10, leading: 10, bottom: 10, trailing: 10))
+            .foregroundColor(.white)
+            .background(Color.black)
+            .cornerRadius(6)
+            
+            Button("Show Alert with Two Button") {
+                alertView.showCustomAlertWith(title: "Alert", message: "This is APAlertView", defaultButtonTitle: "Submit", secondButtonTitle: "Cancel") {
+                    debugPrint("Submit Button Pressed")
+                } secondCompletionHandler: {
+                    debugPrint("Cancel Button Pressed")
+                }
+            }
+            .padding(.init(top: 10, leading: 10, bottom:10, trailing: 10))
+            .foregroundColor(.white)
+            .background(Color.black)
+            .cornerRadius(6)
+            
+        }.uses(alertView)
     }
 }
-//MARK :- Example
-//APAlertView.shared.showAlertView(with: alertTitle, message: alertMessage, buttonTitle: "OK", alertBackgroundColor: .blue, alertTextColor: .white, alertButtonTextColor: .blue, alertButtonBackgroundColor: .white)
