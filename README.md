@@ -11,7 +11,7 @@ APAlertView is written in SwiftUI. You can show a alertview or actionsheet only 
 
 Screenshots
 ---------
-<img src="https://github.com/Arvindcs/APAlertView/blob/main/images/screenshot.png" width="475" height="475"/>
+<img src="https://github.com/Arvindcs/APAlertView/blob/main/images/screenshot.png" width="700" height="475"/>
 
 
 #### If you like the project, don't forget to `put star 🌟`.
