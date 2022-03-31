@@ -30,7 +30,7 @@ and in your code add `import APAlertView`.
 
 ## Manually
 
-Drag `APAlertView.swift` to your project.
+Drag `APAlertView.swift` and  `APActionSheet.swift` to your project.
 
 ## Requirements
 * iOS 13+
