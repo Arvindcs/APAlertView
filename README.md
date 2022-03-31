@@ -7,7 +7,7 @@ APAlertView
 [![InstaGram](https://img.shields.io/badge/Instagram-CodewithArvind-brightgreen)](https://www.instagram.com/codewitharvind)
 
 
-APAlertView is written in SwiftUI. You can show a alertview only writing a signle line of code. it pretty straight forward and you want need to write repatative code for all views.
+APAlertView is written in SwiftUI. You can show a alertview or actionsheet only writing a single line of code. it pretty straight forward and you don't want need to write repatative code for all views.
 
 Screenshots
 ---------
