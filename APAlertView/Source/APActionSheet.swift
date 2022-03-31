@@ -75,7 +75,7 @@ public struct ActionSheetModifier: ViewModifier {
 
 extension View {
     
-    public func usesActionSheet(_ alertManager: APActionSheet) -> some View {
+    public func initializeAlertActionSheet(_ alertManager: APActionSheet) -> some View {
         self.modifier(ActionSheetModifier(actionSheet: alertManager))
     }
 }

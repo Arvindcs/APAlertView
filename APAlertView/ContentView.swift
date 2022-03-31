@@ -10,8 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject var alertView = APAlertView()
-    @StateObject var actionSheet = APActionSheet()
-    
+   
     var body: some View {
         
         VStack(spacing: 30) {
@@ -39,7 +38,7 @@ struct ContentView: View {
             .cornerRadius(6)
             
             Button("Show ActionSheet") {
-                actionSheet.showActionSheet(title: "This is an ActionSheet", firstButtonTitle: "Add User", secondButtonTitle: "Edit User") {
+              alertView.showActionSheet(title: "This is an ActionSheet", firstButtonTitle: "Add User", secondButtonTitle: "Edit User") {
                     debugPrint("Add User Button Pressed")
                 } secondCompletionHandler: {
                     debugPrint("Edit User Button Pressed")
@@ -51,7 +50,7 @@ struct ContentView: View {
             .cornerRadius(6)
                         
         }
-        .usesAlert(alertView)
-        .usesActionSheet(actionSheet)
+        .initializeAlert(alertView)
+        .initializeAlertActionSheet(alertView.actionSheet)
     }
 }

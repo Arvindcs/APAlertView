@@ -16,7 +16,8 @@ public class APAlertView: ObservableObject {
     
     // MARK: Published
     @Published public var showAlertView : Bool = false
-    
+    public var actionSheet = APActionSheet()
+  
     // MARK: Properties
     private var alertType : AlertType = AlertType.defaults
     private var title : String = ""
@@ -85,6 +86,17 @@ public class APAlertView: ObservableObject {
                      secondaryButton: secondaryButton
         )
     }
+  
+  //MARK:- Default Alert View
+  public func showActionSheet(title: String = "",
+                              message: String = "",
+                              firstButtonTitle: String,
+                              secondButtonTitle: String,
+                              defaultCompletionHandler: @escaping () -> (),
+                              secondCompletionHandler: @escaping () -> ()) {
+    
+    actionSheet.showActionSheet(title: title, message: message, firstButtonTitle: firstButtonTitle, secondButtonTitle: secondButtonTitle, defaultCompletionHandler: defaultCompletionHandler, secondCompletionHandler: secondCompletionHandler)
+  }
     
     //MARK:- Internal Method
     public func getCurrentAlert() -> Alert {
@@ -111,7 +123,7 @@ public struct AlertViewModifier: ViewModifier {
 
 extension View {
     
-    public func usesAlert(_ alertManager: APAlertView) -> some View {
+    public func initializeAlert(_ alertManager: APAlertView) -> some View {
         self.modifier(AlertViewModifier(alert: alertManager))
     }
 }
