@@ -36,7 +36,7 @@ Drag `APAlertView.swift` to your project.
 * iOS 13+
 * Xcode 11+
 
-Basic Examples
+AlertView Examples
 ---------
 ```swift
 
@@ -55,10 +55,35 @@ struct ContentView: View {
                     debugPrint("Submit Button Pressed")
                 }
             }
-        }.usesAlert(alertView)  //STEP:- 2
+        }.initializeAlert(alertView)  //STEP:- 2
     }
 }
 
+```
+
+ActionSheet Examples
+---------
+```swift
+
+import SwiftUI
+
+struct ContentView: View {
+    
+    //STEP:- 1
+    @StateObject var actionSheet = APAlertView()
+
+    var body: some View {
+        VStack(spacing: 30) {
+          Button("Show ActionSheet") {
+            actionSheet.showActionSheet(title: "This is an ActionSheet", firstButtonTitle: "Add User", secondButtonTitle: "Edit User") {
+                  debugPrint("Add User Button Pressed")
+              } secondCompletionHandler: {
+                  debugPrint("Edit User Button Pressed")
+              }
+          }
+        }.initializeAlertActionSheet(alertView.actionSheet) //STEP:- 2
+    }
+}
 
 ```
 
