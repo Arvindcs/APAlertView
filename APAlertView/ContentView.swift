@@ -10,36 +10,41 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject var alertView = APAlertView()
-   
+    
     var body: some View {
         
         VStack(spacing: 30) {
             
             Button("Show Default Alert") {
-                alertView.showAlertViewWith(title: "Alert", message: "This is APAlertView", buttonTitle: "Ok") {
-                    debugPrint("OK Button Pressed")
-                }
+                alertView.showAlertView(title: "Alert", message: "Some Message", primaryCompletion: ("OK", {
+                    debugPrint("OK")
+                }))
             }
+            
             
             Button("Show Alert with Two Button") {
-                alertView.showAlertWithTwoButton(title: "Alert", message: "This is APAlertView", firstButtonTitle: "Submit", secondButtonTitle: "Cancel") {
-                    debugPrint("Submit Button Pressed")
-                } secondCompletionHandler: {
-                    debugPrint("Cancel Button Pressed")
-                }
+                alertView.showAlertView(title: "Alert", message: "Some Message", primaryCompletion: ("OK", {
+                    debugPrint("OK")
+                }), secondaryCompletion: ("Cancel", {
+                    debugPrint("Cancel")
+                }))
             }
-           
+            
             
             Button("Show ActionSheet") {
-              alertView.showActionSheet(title: "This is an ActionSheet", firstButtonTitle: "Add User", secondButtonTitle: "Edit User") {
-                    debugPrint("Add User Button Pressed")
-                } secondCompletionHandler: {
-                    debugPrint("Edit User Button Pressed")
-                }
+                
+                alertView.showActionSheet(title: "ActionSheet", message: "Message" , primaryCompletion: ("Add", {
+                    debugPrint("Add")
+                }), secondaryCompletion: ("Delete", {
+                    debugPrint("Delete")
+                }), dissmissCompletion: ("Cancel", {
+                    debugPrint("Cancel")
+                }))
+                
             }
-           
+            
         }
         .initializeAlert(alertView)
-        .initializeAlertActionSheet(alertView.actionSheet)
+        .initializeAlertActionSheet(alertView)
     }
 }

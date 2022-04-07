@@ -9,121 +9,82 @@ import SwiftUI
 
 public class APAlertView: ObservableObject {
     
-    public enum AlertType {
-        case defaults
-        case twoButton
-    }
-    
     // MARK: Published
     @Published public var showAlertView : Bool = false
-    public var actionSheet = APActionSheet()
-  
+    @Published public var showActionSheet : Bool = false
+    
     // MARK: Properties
-    private var alertType : AlertType = AlertType.defaults
     private var title : String = ""
     private var message : String = ""
     
-    private var defaultButtonTitle: String = "OK"
-    private var defaultButtonCompletionHandler: () -> () = {}
-    
-    private var secondButtonTitle: String = ""
-    private var secondCompletionHandler: () -> () = {}
+    private var primaryCompletion: (buttonName: String, closure: (() -> ())) = ("", {})
+    private var secondaryCompletion: (buttonName: String, closure: (() -> ())) = ("", {})
+    private var dissmissCompletion: (buttonName: String, closure: (() -> ())) = ("", {})
     
     //MARK:- Default Alert View
-    public func showAlertViewWith(title: String = "",
-                                  message: String = "",
-                                  buttonTitle: String,
-                                  defaultCompletionHandler: @escaping () -> ()) {
-        self.alertType = .defaults
+    public func showAlertView(title: String = "",
+                              message: String,
+                              primaryCompletion: (buttonName: String, closure: (() -> ())),
+                              secondaryCompletion: (buttonName: String, closure: (() -> ())) = ("", {})) {
         self.title = title
         self.message = message
-        self.defaultButtonTitle = buttonTitle
-        self.defaultButtonCompletionHandler = defaultCompletionHandler
-        showAlertView = true
+        self.primaryCompletion = primaryCompletion
+        self.secondaryCompletion = secondaryCompletion
+        self.showAlertView = true
+    }
+    
+    public func showAlertView(title: String,
+                              message: String,
+                              primaryCompletion: (buttonName: String, closure: (() -> ()))) {
+        self.showAlertView(title: title, message: message, primaryCompletion: primaryCompletion, secondaryCompletion: ("", {}))
     }
     
     // MARK: A representation for an alert presentation.
-    private var getDefaultAlert: Alert {
+    var getSystemAlert: Alert {
         
-        let defaultButton = Alert.Button.default(Text(defaultButtonTitle)) {
-            self.defaultButtonCompletionHandler()
+        let primaryButton = Alert.Button.default(Text(primaryCompletion.buttonName)) {
+            self.primaryCompletion.closure()
         }
         
-        return Alert(title: Text(title), message: Text(message), dismissButton: defaultButton)
+        if secondaryCompletion.buttonName != "" {
+            let secondaryButton = Alert.Button.default(Text(secondaryCompletion.buttonName)) {
+                self.secondaryCompletion.closure()
+            }
+            
+            return Alert(title: Text(title), message: Text(message), primaryButton: primaryButton, secondaryButton: secondaryButton)
+        }
+        
+        return Alert(title: Text(title), message: Text(message), dismissButton: primaryButton)
     }
-    //MARK:- Alert View with Two Button
-    public func showAlertWithTwoButton(title: String = "",
-                                       message: String = "",
-                                       firstButtonTitle: String,
-                                       secondButtonTitle: String,
-                                       firstCompletionHandler: @escaping () -> (),
-                                       secondCompletionHandler: @escaping () -> ()) {
-        self.alertType = .twoButton
+    
+    //MARK:- Action Sheet
+    public func showActionSheet(title: String,
+                                message: String = "",
+                                primaryCompletion: (buttonName: String, closure: (() -> ())),
+                                secondaryCompletion: (buttonName: String, closure: (() -> ())) = ("", {}),
+                                dissmissCompletion: (buttonName: String, closure: (() -> ()))) {
         self.title = title
         self.message = message
-        
-        self.defaultButtonTitle = firstButtonTitle
-        self.defaultButtonCompletionHandler = firstCompletionHandler
-        
-        self.secondButtonTitle = secondButtonTitle
-        self.secondCompletionHandler = secondCompletionHandler
-        
-        showAlertView = true
+        self.primaryCompletion = primaryCompletion
+        self.secondaryCompletion = secondaryCompletion
+        self.dissmissCompletion = dissmissCompletion
+        self.showActionSheet = true
     }
     
-    private var getTwoButtonAlert: Alert {
-        let primaryButton = Alert.Button.default(Text(defaultButtonTitle)) {
-            self.defaultButtonCompletionHandler()
+    var getActionSheet: ActionSheet {
+        
+        let action1 = ActionSheet.Button.default(Text(primaryCompletion.buttonName)) {
+            self.primaryCompletion.closure()
         }
         
-        let secondaryButton = Alert.Button.default(Text(secondButtonTitle)) {
-            self.secondCompletionHandler()
+        let action2 = ActionSheet.Button.default(Text(secondaryCompletion.buttonName)) {
+            self.secondaryCompletion.closure()
         }
         
-        return Alert(title: Text(title),
-                     message: Text(message),
-                     primaryButton: primaryButton,
-                     secondaryButton: secondaryButton
-        )
-    }
-  
-  //MARK:- Default Alert View
-  public func showActionSheet(title: String = "",
-                              message: String = "",
-                              firstButtonTitle: String,
-                              secondButtonTitle: String,
-                              defaultCompletionHandler: @escaping () -> (),
-                              secondCompletionHandler: @escaping () -> ()) {
-    
-    actionSheet.showActionSheet(title: title, message: message, firstButtonTitle: firstButtonTitle, secondButtonTitle: secondButtonTitle, defaultCompletionHandler: defaultCompletionHandler, secondCompletionHandler: secondCompletionHandler)
-  }
-    
-    //MARK:- Internal Method
-    public func getCurrentAlert() -> Alert {
-        switch alertType {
-        case .defaults:
-            return getDefaultAlert
-        case .twoButton:
-            return getTwoButtonAlert
+        let action3 = ActionSheet.Button.cancel(Text(dissmissCompletion.buttonName)) {
+            self.dissmissCompletion.closure()
         }
-    }
-}
-
-public struct AlertViewModifier: ViewModifier {
-    
-    @ObservedObject var alert: APAlertView
-    
-    public func body(content: Content) -> some View {
-        content
-            .alert(isPresented: $alert.showAlertView) {
-                alert.getCurrentAlert()
-            }
-    }
-}
-
-extension View {
-    
-    public func initializeAlert(_ alertManager: APAlertView) -> some View {
-        self.modifier(AlertViewModifier(alert: alertManager))
+        
+        return ActionSheet(title: Text(title), message: Text(message), buttons: [action1, action2, action3])
     }
 }

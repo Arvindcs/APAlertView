@@ -28,7 +28,7 @@ and in your code add `import APAlertView`.
 
 ## Manually
 
-Drag `APAlertView.swift` and  `APActionSheet.swift` to your project.
+Drag `APAlertView.swift` , `View+Extention.swift` and  `ViewModifier.swift` to your project.
 
 ## Requirements
 * iOS 13+
@@ -48,10 +48,9 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 30) {
             Button("Show Default Alert") {
-                //STEP:- 3
-                alertView.showAlertWith(title: "Alert", message: "This is APAlertView", buttonTitle: "Ok") {
-                    debugPrint("Submit Button Pressed")
-                }
+                alertView.showAlertView(title: "Alert", message: "Some Message", primaryCompletion: ("OK", {
+                    debugPrint("OK")
+                }))
             }
         }.initializeAlert(alertView)  //STEP:- 2
     }
@@ -73,11 +72,13 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 30) {
           Button("Show ActionSheet") {
-            actionSheet.showActionSheet(title: "This is an ActionSheet", firstButtonTitle: "Add User", secondButtonTitle: "Edit User") {
-                  debugPrint("Add User Button Pressed")
-              } secondCompletionHandler: {
-                  debugPrint("Edit User Button Pressed")
-              }
+             alertView.showActionSheet(title: "ActionSheet", message: "Message" , primaryCompletion: ("Add", {
+                    debugPrint("Add")
+                }), secondaryCompletion: ("Delete", {
+                    debugPrint("Delete")
+                }), dissmissCompletion: ("Cancel", {
+                    debugPrint("Cancel")
+                }))
           }
         }.initializeAlertActionSheet(alertView.actionSheet) //STEP:- 2
     }
