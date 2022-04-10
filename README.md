@@ -18,13 +18,10 @@ Screenshots
 
 Setup Instructions
 ------------------
-[CocoaPods](http://cocoapods.org)
-------------------
-To integrate APAlertView into your Xcode project using CocoaPods, specify it in your `Podfile`:
-```ruby
-pod 'APAlertView'
-```
-and in your code add `import APAlertView`.
+[Swift Package Manager](https://www.swift.org/getting-started/#package-manager)
+For adding it as a Swift Package in Xcode 13.0 or later, select File > Add Packages > then add the repository URL 
+
+https://github.com/Arvindcs/APAlert.git
 
 ## Manually
 
