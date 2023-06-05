@@ -2,7 +2,7 @@ APAlertView
 =============
 
 [![swiftUI](https://img.shields.io/badge/SWIFTUI-green)](https://developer.apple.com/documentation/swiftui)
-[![InstaGram](https://img.shields.io/badge/Instagram-CodewithArvind-brightgreen)](https://www.instagram.com/arvind_iosdev)
+[![InstaGram](https://img.shields.io/badge/Instagram-arvind_iOSDev-brightgreen)](https://www.instagram.com/arvind_iosdev)
 
 
 APAlertView is written in SwiftUI. You can show a alertview or actionsheet only writing a single line of code. it pretty straight forward and you don't want need to write repatative code for all views.
