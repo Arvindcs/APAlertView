@@ -71,6 +71,9 @@ public class APAlertView: ObservableObject {
     @Published public private(set) var showAlertView: Bool = false
     @Published public private(set) var showActionSheet: Bool = false
     
+    // MARK: - Initializer
+    public init() {}
+    
     // MARK: - Private Properties
     private var currentAlertConfiguration: AlertConfiguration?
     private var currentConfirmationDialogConfiguration: ConfirmationDialogConfiguration?
