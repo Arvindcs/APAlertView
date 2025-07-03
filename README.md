@@ -18,7 +18,7 @@ APAlertView is a powerful, modern SwiftUI alert and action sheet library. It pro
 
 ## Screenshots
 
-<img src="https://github.com/Arvindcs/APAlertView/blob/main/images/screenshot.png" width="700" height="475"/>
+<img src="https://github.com/Arvindcs/APAlertView/blob/main/Examples/images/screenshot.png" width="700" height="475"/>
 
 #### If you like the project, don't forget to `put star 🌟`.
 
