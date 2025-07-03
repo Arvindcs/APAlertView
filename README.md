@@ -100,10 +100,10 @@ Button("Delete Item") {
 }
 ```
 
-### Action Sheet
+### Confirmation Dialog (formerly Action Sheet)
 ```swift
-Button("Show Action Sheet") {
-    let configuration = ActionSheetConfiguration(
+Button("Show Confirmation Dialog") {
+    let configuration = ConfirmationDialogConfiguration(
         title: "Choose Action",
         message: "Select an action to perform",
         buttons: [
@@ -121,8 +121,16 @@ Button("Show Action Sheet") {
             }
         ]
     )
-    alertView.showActionSheet(configuration)
+    alertView.showConfirmationDialog(configuration)
 }
+```
+
+### Photo Picker Confirmation Dialog
+```swift
+alertView.showPhotoPickerConfirmationDialog(
+    onCamera: { print("Camera selected") },
+    onPhotoLibrary: { print("Photo library selected") }
+)
 ```
 
 ## 🎯 Convenience Methods
@@ -151,14 +159,6 @@ alertView.showDestructiveAlert(
     title: "Delete Account",
     message: "This action cannot be undone.",
     onDestructive: { print("Account deleted") }
-)
-```
-
-### Photo Picker Action Sheet
-```swift
-alertView.showPhotoPickerActionSheet(
-    onCamera: { print("Camera selected") },
-    onPhotoLibrary: { print("Photo library selected") }
 )
 ```
 
@@ -227,12 +227,12 @@ alertView.showActionSheet(
 ### Individual Modifiers
 ```swift
 .initializeAlert(alertView)           // For alerts only
-.initializeAlertActionSheet(alertView) // For action sheets only
+.initializeAlertConfirmationDialog(alertView) // For confirmation dialogs only
 ```
 
 ### Combined Modifier
 ```swift
-.initializeAlertSystem(alertView)     // For both alerts and action sheets
+.initializeAlertSystem(alertView)     // For both alerts and confirmation dialogs
 ```
 
 ## 📋 Migration Guide

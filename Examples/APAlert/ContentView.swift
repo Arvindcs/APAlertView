@@ -55,7 +55,7 @@ struct ContentView: View {
                         .tint(.red)
                         
                         Button("Show Action Sheet") {
-                            let configuration = ActionSheetConfiguration(
+                            let configuration = ConfirmationDialogConfiguration(
                                 title: "Choose Action",
                                 message: "Select an action to perform",
                                 buttons: [
@@ -73,7 +73,7 @@ struct ContentView: View {
                                     }
                                 ]
                             )
-                            alertView.showActionSheet(configuration)
+                            alertView.showConfirmationDialog(configuration)
                         }
                         .buttonStyle(.borderedProminent)
                         .tint(.blue)
