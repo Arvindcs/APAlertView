@@ -12,39 +12,84 @@ struct ContentView: View {
     @StateObject var alertView = APAlertView()
     
     var body: some View {
-        
-        VStack(spacing: 30) {
-            
-            Button("Show Default Alert") {
-                alertView.showAlertView(title: "Alert", message: "Some Message", primaryCompletion: ("OK", {
-                    debugPrint("OK")
-                }))
+        NavigationView {
+            ScrollView {
+                VStack(spacing: 20) {
+                    
+                    // MARK: - API Examples
+                    Group {
+                        Text("API Examples")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.top)
+                        
+                        Button("Show Alert") {
+                            let configuration = AlertConfiguration(
+                                title: "Success",
+                                message: "Operation completed successfully!",
+                                primaryButton: AlertButton(title: "OK") {
+                                    print("OK tapped")
+                                },
+                                secondaryButton: AlertButton(title: "Cancel", style: .cancel) {
+                                    print("Cancel tapped")
+                                }
+                            )
+                            alertView.showAlert(configuration)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        
+                        Button("Show Destructive Alert") {
+                            let configuration = AlertConfiguration(
+                                title: "Delete Item",
+                                message: "Are you sure you want to delete this item? This action cannot be undone.",
+                                primaryButton: AlertButton(title: "Delete", style: .destructive) {
+                                    print("Delete confirmed")
+                                },
+                                secondaryButton: AlertButton(title: "Cancel", style: .cancel) {
+                                    print("Delete cancelled")
+                                }
+                            )
+                            alertView.showAlert(configuration)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.red)
+                        
+                        Button("Show Action Sheet") {
+                            let configuration = ActionSheetConfiguration(
+                                title: "Choose Action",
+                                message: "Select an action to perform",
+                                buttons: [
+                                    AlertButton(title: "Add Item") {
+                                        print("Add item selected")
+                                    },
+                                    AlertButton(title: "Edit Item") {
+                                        print("Edit item selected")
+                                    },
+                                    AlertButton(title: "Delete Item", style: .destructive) {
+                                        print("Delete item selected")
+                                    },
+                                    AlertButton(title: "Cancel", style: .cancel) {
+                                        print("Action sheet cancelled")
+                                    }
+                                ]
+                            )
+                            alertView.showActionSheet(configuration)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.blue)
+                    }
+                    
+
+                }
+                .padding()
             }
-            
-            
-            Button("Show Alert with Two Button") {
-                alertView.showAlertView(title: "Alert", message: "Some Message", primaryCompletion: ("OK", {
-                    debugPrint("OK")
-                }), secondaryCompletion: ("Cancel", {
-                    debugPrint("Cancel")
-                }))
-            }
-            
-            
-            Button("Show ActionSheet") {
-                
-                alertView.showActionSheet(title: "ActionSheet", message: "Message" , primaryCompletion: ("Add", {
-                    debugPrint("Add")
-                }), secondaryCompletion: ("Delete", {
-                    debugPrint("Delete")
-                }), dissmissCompletion: ("Cancel", {
-                    debugPrint("Cancel")
-                }))
-                
-            }
-            
+            .navigationTitle("APAlertView Demo")
+            .navigationBarTitleDisplayMode(.large)
         }
-        .initializeAlert(alertView)
-        .initializeAlertActionSheet(alertView)
+        .initializeAlertSystem(alertView) // Using the new combined modifier
     }
+}
+
+#Preview {
+    ContentView()
 }

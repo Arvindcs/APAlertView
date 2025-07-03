@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
 
 
 
-  s.source       = { :git => "https://github.com/Arvindcs/APAlertView.git", :tag => s.version.to_s }
-  s.source_files = 'APAlertView/Source/APAlertView.swift', 'APAlertView/Source/APActionSheet.swift'
+  s.source       = { :git => "https://github.com/arvindcs/APAlertView.git", :tag => s.version.to_s }
+  s.source_files = 'APAlert/Source/*.swift'
   s.ios.deployment_target = "13.0"
   s.swift_version = "5.0"
 
